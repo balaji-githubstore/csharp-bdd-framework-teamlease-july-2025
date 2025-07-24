@@ -1,4 +1,5 @@
 using EmployeeManagementBDD.Hooks;
+using EmployeeManagementBDD.Pages;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -8,50 +9,51 @@ using System;
 namespace EmployeeManagementBDD.StepDefinitions
 {
     [Binding]
-    public class LoginStepDefinitions 
+    public class LoginStepDefinitions
     {
-        private readonly IWebDriver driver;
-        public LoginStepDefinitions(AutomationHooks hooks) 
+        private readonly LoginPage _loginPage;
+        private readonly DashboardPage _dashboardPage;
+        public LoginStepDefinitions(LoginPage loginPage, DashboardPage dashboardPage)
         {
-            driver = hooks.driver;
+            this._loginPage = loginPage;
+            this._dashboardPage = dashboardPage;
         }
 
         [Given("I have browser with OrangeHRM application")]
         public void GivenIHaveBrowserWithOrangeHRMApplication()
         {
-            driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/");
+            _loginPage.NavigateToUrl();
         }
 
         [When("I enter username as {string}")]
         public void WhenIEnterUsernameAs(string username)
         {
-            driver.FindElement(By.Name("username")).SendKeys(username);
+            _loginPage.EnterUsername(username);
         }
 
         [When("I enter password as {string}")]
         public void WhenIEnterPasswordAs(string password)
         {
-            driver.FindElement(By.Name("password")).SendKeys(password);
+            _loginPage.EnterPassword(password);
         }
 
         [When("I click on login")]
         public void WhenIClickOnLogin()
         {
-            driver.FindElement(By.XPath("//button[normalize-space()='Login']")).Click();
+            _loginPage.ClickOnLogin();
         }
 
         [Then("I should access to portal with header as {string}")]
         public void ThenIShouldAccessToPortalWithHeaderAs(string expectedValue)
         {
-            string actualValue = driver.FindElement(By.XPath("//p[contains(normalize-space(),'Work')]")).Text;
+            string actualValue = _dashboardPage.GetTimeAtWorkHeader();
             Assert.That(actualValue, Is.EqualTo(expectedValue));
         }
 
         [Then("I should not get access with error as {string}")]
         public void ThenIShouldNotGetAccessWithErrorAs(string expectedError)
         {
-            string actualValue = driver.FindElement(By.XPath("//p[contains(normalize-space(),'Invalid')]")).Text;
-            Assert.That(actualValue.Contains("Invalid credential"), "Assertion on Invalid credentials");
+            Assert.That(_loginPage.GetInvalidErrorMessage().Contains("Invalid credential"), "Assertion on Invalid credentials");
         }
     }
 }

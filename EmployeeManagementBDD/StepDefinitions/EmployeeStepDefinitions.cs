@@ -1,5 +1,6 @@
 
 using EmployeeManagementBDD.Hooks;
+using EmployeeManagementBDD.Pages;
 using OpenQA.Selenium;
 
 namespace EmployeeManagementBDD.StepDefinitions
@@ -7,24 +8,27 @@ namespace EmployeeManagementBDD.StepDefinitions
     [Binding]
     public class EmployeeStepDefinitions 
     {
-
-        private readonly IWebDriver driver;
-        public EmployeeStepDefinitions(AutomationHooks hooks)
+        private readonly MainPage _mainPage;
+        private readonly PIMPage _pimPage;
+        private readonly AddEmployeePage _addEmployeePage;
+        public EmployeeStepDefinitions(MainPage mainPage, PIMPage pimPage, AddEmployeePage addEmployeePage)
         {
-            driver = hooks.driver;
+            _mainPage= mainPage;
+            _pimPage= pimPage;
+            _addEmployeePage= addEmployeePage;
         }
 
 
         [When("I click on PIM menu")]
         public void WhenIClickOnPIMMenu()
         {
-            driver.FindElement(By.XPath("//span[text()='PIM']")).Click();
+            _mainPage.ClickOnPIMMenu();
         }
 
         [When("I click on Add Employee menu")]
         public void WhenIClickOnAddEmployeeMenu()
         {
-            driver.FindElement(By.LinkText("Add Employee")).Click();
+            _pimPage.ClickOnAddEmployee();
         }
 
         [When("I fill the employee form")]
@@ -42,15 +46,18 @@ namespace EmployeeManagementBDD.StepDefinitions
             Console.WriteLine(dataTable.Rows[0]["middleName"]);
             Console.WriteLine(dataTable.Rows[0]["lastName"]);
 
-            driver.FindElement(By.Name("firstName")).SendKeys(dataTable.Rows[0]["firstName"]);
-            driver.FindElement(By.Name("middleName")).SendKeys(dataTable.Rows[0]["middleName"]);
-            driver.FindElement(By.Name("lastName")).SendKeys(dataTable.Rows[0]["lastName"]);
+            //driver.FindElement(By.Name("firstName")).SendKeys(dataTable.Rows[0]["firstName"]);
+            //driver.FindElement(By.Name("middleName")).SendKeys(dataTable.Rows[0]["middleName"]);
+            //driver.FindElement(By.Name("lastName")).SendKeys(dataTable.Rows[0]["lastName"]);
+
+            _addEmployeePage.FillEmployeeDetails(dataTable.Rows[0]["firstName"],
+                dataTable.Rows[0]["middleName"], dataTable.Rows[0]["lastName"]);
         }
 
         [When("I click on save employee")]
         public void WhenIClickOnSaveEmployee()
         {
-            
+            _addEmployeePage.ClickOnSave();
         }
 
         [Then("I should get the profile name as {string}")]
