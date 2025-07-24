@@ -13,9 +13,6 @@ namespace EmployeeManagementBDD.StepDefinitions
         [Given("I have browser with OrangeHRM application")]
         public void GivenIHaveBrowserWithOrangeHRMApplication()
         {
-            AutomationHooks.driver = new ChromeDriver();
-            AutomationHooks.driver.Manage().Window.Maximize();
-            AutomationHooks.driver.Manage().Timeouts().ImplicitWait=TimeSpan.FromSeconds(10);
             AutomationHooks.driver.Navigate().GoToUrl("https://opensource-demo.orangehrmlive.com/");
         }
 
