@@ -105,10 +105,17 @@ namespace EmployeeManagementBDD.Features
         
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Add Valid Employee Record")]
-        public async global::System.Threading.Tasks.Task AddValidEmployeeRecord()
+        [NUnit.Framework.TestCaseAttribute("Admin", "admin123", "saul", "G", "goodman", null)]
+        [NUnit.Framework.TestCaseAttribute("Admin", "admin123", "john", "w", "wick", null)]
+        public async global::System.Threading.Tasks.Task AddValidEmployeeRecord(string username, string password, string fname, string middle_Name, string lname, string[] exampleTags)
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = exampleTags;
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            argumentsOfScenario.Add("username", username);
+            argumentsOfScenario.Add("password", password);
+            argumentsOfScenario.Add("fname", fname);
+            argumentsOfScenario.Add("middle_name", middle_Name);
+            argumentsOfScenario.Add("lname", lname);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("Add Valid Employee Record", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
@@ -124,10 +131,10 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("I have browser with OrangeHRM application", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 8
- await testRunner.WhenAsync("I enter username as \"Admin\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync(string.Format("I enter username as \"{0}\"", username), ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 9
- await testRunner.AndAsync("I enter password as \"admin123\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync(string.Format("I enter password as \"{0}\"", password), ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 10
  await testRunner.AndAsync("I click on login", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -143,9 +150,9 @@ this.ScenarioInitialize(scenarioInfo);
                             "middleName",
                             "lastName"});
                 table1.AddRow(new string[] {
-                            "John",
-                            "w",
-                            "wick"});
+                            string.Format("{0}", fname),
+                            string.Format("{0}", middle_Name),
+                            string.Format("{0}", lname)});
 #line 13
  await testRunner.AndAsync("I fill the employee form", ((string)(null)), table1, "And ");
 #line hidden
@@ -153,7 +160,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.AndAsync("I click on save employee", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 17
- await testRunner.ThenAsync("I should get the profile name as \"Jack wick\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync(string.Format("I should get the profile name as \"{0} {1}\"", fname, lname), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
 #line 18
  await testRunner.AndAsync("I should get all field with filled data", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

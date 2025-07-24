@@ -1,5 +1,3 @@
-using System;
-using Reqnroll;
 
 namespace EmployeeManagementBDD.StepDefinitions
 {
@@ -23,6 +21,17 @@ namespace EmployeeManagementBDD.StepDefinitions
         {
             Console.WriteLine(dataTable);
             //FILL THE FIRSTNAME, MIDDLENAME, LASTNAME
+            Console.WriteLine(dataTable.RowCount);
+
+           
+
+            Console.WriteLine(dataTable.Rows[0][0]);
+            Console.WriteLine(dataTable.Rows[0][1]);
+            Console.WriteLine(dataTable.Rows[0][2]);
+
+            Console.WriteLine(dataTable.Rows[0]["firstName"]);
+            Console.WriteLine(dataTable.Rows[0]["middleName"]);
+            Console.WriteLine(dataTable.Rows[0]["lastName"]);
         }
 
         [When("I click on save employee")]
