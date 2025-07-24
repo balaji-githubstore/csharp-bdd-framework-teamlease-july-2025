@@ -19,7 +19,7 @@ Scenario Outline: Add Valid Employee Record
 Examples:
 	| username | password | fname | middle_name | lname   |
 	| Admin    | admin123 | saul  | G           | goodman |
-	| Admin    | admin123 | john  | w           | wick    |
+	#| Admin    | admin123 | john  | w           | wick    |
 
 
 

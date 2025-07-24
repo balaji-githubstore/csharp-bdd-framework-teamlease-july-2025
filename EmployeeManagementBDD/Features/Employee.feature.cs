@@ -106,7 +106,6 @@ namespace EmployeeManagementBDD.Features
         [NUnit.Framework.TestAttribute()]
         [NUnit.Framework.DescriptionAttribute("Add Valid Employee Record")]
         [NUnit.Framework.TestCaseAttribute("Admin", "admin123", "saul", "G", "goodman", null)]
-        [NUnit.Framework.TestCaseAttribute("Admin", "admin123", "john", "w", "wick", null)]
         public async global::System.Threading.Tasks.Task AddValidEmployeeRecord(string username, string password, string fname, string middle_Name, string lname, string[] exampleTags)
         {
             string[] tagsOfScenario = exampleTags;

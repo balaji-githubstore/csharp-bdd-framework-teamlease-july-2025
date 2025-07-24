@@ -14,7 +14,7 @@
 #	| firstName | middleName | lastName |
 #	| John      | w          | wick     |
 #	And I click on save employee 
-#	Then I should get the profile name as "Jack wick"
+#	Then I should get the profile name as "John wick"
 #	And I should get all field with filled data
 #
 #Scenario: Add Valid Employee Record2
