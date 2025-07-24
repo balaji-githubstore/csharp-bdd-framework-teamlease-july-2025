@@ -5,18 +5,26 @@ using OpenQA.Selenium;
 namespace EmployeeManagementBDD.StepDefinitions
 {
     [Binding]
-    public class EmployeeStepDefinitions
+    public class EmployeeStepDefinitions 
     {
+
+        private readonly IWebDriver driver;
+        public EmployeeStepDefinitions(AutomationHooks hooks)
+        {
+            driver = hooks.driver;
+        }
+
+
         [When("I click on PIM menu")]
         public void WhenIClickOnPIMMenu()
         {
-            AutomationHooks.driver.FindElement(By.XPath("//span[text()='PIM']")).Click();
+            driver.FindElement(By.XPath("//span[text()='PIM']")).Click();
         }
 
         [When("I click on Add Employee menu")]
         public void WhenIClickOnAddEmployeeMenu()
         {
-            AutomationHooks.driver.FindElement(By.LinkText("Add Employee")).Click();
+            driver.FindElement(By.LinkText("Add Employee")).Click();
         }
 
         [When("I fill the employee form")]
@@ -34,9 +42,9 @@ namespace EmployeeManagementBDD.StepDefinitions
             Console.WriteLine(dataTable.Rows[0]["middleName"]);
             Console.WriteLine(dataTable.Rows[0]["lastName"]);
 
-            AutomationHooks.driver.FindElement(By.Name("firstName")).SendKeys(dataTable.Rows[0]["firstName"]);
-            AutomationHooks.driver.FindElement(By.Name("middleName")).SendKeys(dataTable.Rows[0]["middleName"]);
-            AutomationHooks.driver.FindElement(By.Name("lastName")).SendKeys(dataTable.Rows[0]["lastName"]);
+            driver.FindElement(By.Name("firstName")).SendKeys(dataTable.Rows[0]["firstName"]);
+            driver.FindElement(By.Name("middleName")).SendKeys(dataTable.Rows[0]["middleName"]);
+            driver.FindElement(By.Name("lastName")).SendKeys(dataTable.Rows[0]["lastName"]);
         }
 
         [When("I click on save employee")]

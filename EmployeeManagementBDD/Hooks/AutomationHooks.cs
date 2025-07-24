@@ -11,14 +11,14 @@ namespace EmployeeManagementBDD.Hooks
     [Binding]
     public class AutomationHooks
     {
-        public static IWebDriver driver;
+        public IWebDriver driver;
 
         [BeforeScenario]
         public void SetupScenario()
         {
-            AutomationHooks.driver = new ChromeDriver();
-            AutomationHooks.driver.Manage().Window.Maximize();
-            AutomationHooks.driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
+            driver = new ChromeDriver();
+            driver.Manage().Window.Maximize();
+            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(10);
         }
 
         [AfterScenario]
