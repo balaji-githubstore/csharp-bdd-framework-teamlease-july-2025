@@ -1,6 +1,7 @@
 
 using EmployeeManagementBDD.Hooks;
 using EmployeeManagementBDD.Pages;
+using NUnit.Framework;
 using OpenQA.Selenium;
 
 namespace EmployeeManagementBDD.StepDefinitions
@@ -11,13 +12,16 @@ namespace EmployeeManagementBDD.StepDefinitions
         private readonly MainPage _mainPage;
         private readonly PIMPage _pimPage;
         private readonly AddEmployeePage _addEmployeePage;
-        public EmployeeStepDefinitions(MainPage mainPage, PIMPage pimPage, AddEmployeePage addEmployeePage)
+        private readonly PersonalDetailsPage _personalDetailsPage;
+        private readonly ScenarioContext _scenarioContext;
+        public EmployeeStepDefinitions(MainPage mainPage, PIMPage pimPage, AddEmployeePage addEmployeePage, PersonalDetailsPage personalDetailsPage,ScenarioContext scenarioContext)
         {
             _mainPage= mainPage;
             _pimPage= pimPage;
             _addEmployeePage= addEmployeePage;
+            _personalDetailsPage= personalDetailsPage;
+            _scenarioContext = scenarioContext;
         }
-
 
         [When("I click on PIM menu")]
         public void WhenIClickOnPIMMenu()
@@ -34,6 +38,8 @@ namespace EmployeeManagementBDD.StepDefinitions
         [When("I fill the employee form")]
         public void WhenIFillTheEmployeeForm(DataTable dataTable)
         {
+            _scenarioContext.Add("employeeDt", dataTable);
+           
             Console.WriteLine(dataTable);
             //FILL THE FIRSTNAME, MIDDLENAME, LASTNAME
             Console.WriteLine(dataTable.RowCount);
@@ -63,13 +69,28 @@ namespace EmployeeManagementBDD.StepDefinitions
         [Then("I should get the profile name as {string}")]
         public void ThenIShouldGetTheProfileNameAs(string expectedProfileName)
         {
-            
+            string actualProfileName = _personalDetailsPage.GetProfileName(expectedProfileName);
+            Assert.That(actualProfileName, Is.EqualTo(expectedProfileName));
         }
 
         [Then("I should get all field with filled data")]
         public void ThenIShouldGetAllFieldWithFilledData()
         {
-            //use same datatable and verify it 
+
+            if(_scenarioContext.TryGetValue("employeeDt",out DataTable dt))
+            {
+                //access the username
+                //use same datatable and verify it 
+                Console.WriteLine(dt.Rows[0]["firstName"]);
+                Console.WriteLine(dt.Rows[0]["middleName"]);
+                Console.WriteLine(dt.Rows[0]["lastName"]);
+            }
+
+            
+            if(_scenarioContext.TryGetValue("username",out string output))
+            {
+                Console.WriteLine(output);
+            }
         }
     }
 }

@@ -13,6 +13,7 @@ namespace EmployeeManagementBDD.Pages
         private By firstNameLocator = By.Name("firstName");
         private By lastNameLocator = By.Name("lastName");
         private By middleNameLocator = By.Name("middleName");
+        private By saveLocator = By.XPath("//button[normalize-space()='Save']");
 
         private IWebDriver _driver;
 
@@ -31,7 +32,7 @@ namespace EmployeeManagementBDD.Pages
 
         public void ClickOnSave()
         {
-
+            ClickOnElement(saveLocator);
         }
     }
 }
